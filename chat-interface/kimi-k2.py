@@ -2,7 +2,7 @@ from langchain_openai import ChatOpenAI
 
 model = ChatOpenAI(
     model="moonshotai/kimi-k2-instruct",
-    api_key="sk_EHrdHHP2o_fqvtVIAujtUJH_2YfOF4B7IW_zHxBSjvU",
+    api_key="sk_IHaveDeletedThisBro:)",
     base_url="https://api.novita.ai/v3/openai"
 )
 

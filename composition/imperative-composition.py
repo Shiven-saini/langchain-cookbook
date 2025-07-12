@@ -1,35 +1,26 @@
 from langchain_ollama import ChatOllama
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import chain
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 
+
+model = ChatOllama(model="gemma3:4b")
 
 template = ChatPromptTemplate.from_messages(
 
     [
         ('system', "You are a helpful assistant."),
-        ('human', "{question}")
+        ('user', "{question}")
     ]
 
 )
 
-model = ChatOllama(
-    model="gemma3:4b",
-    temperature=0.8
-)
-
-# Combine them using a chain decorator in langchain
+# Combining the template and model together in a function
 @chain
-def chatbot(values):
-    prompt = template.invoke(values)
-    for token in model.invoke(prompt):
-        yield token
+def process_input(value):
+    prompt = template.invoke(value)
+    return model.invoke(prompt)
 
+response = process_input.invoke({"question" : "What is a quasar?"})
 
-for token in chatbot.stream(
+print(response.content)
 
-    {
-        "question": "How are you doing?"
-    }
-
-):
-    print(token)

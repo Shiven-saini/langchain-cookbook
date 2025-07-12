@@ -18,10 +18,6 @@ model_deepseek = ChatDeepSeek(
     api_key=api_key
 )
 
-model_gemma = ChatOllama(
-    model="gemma3:4b"
-)
-
 
 # Defining the Pydantic desired output schema.
 class BooleanWithJustification(BaseModel):
@@ -32,10 +28,8 @@ class BooleanWithJustification(BaseModel):
     '''Justification about your answer.'''
 
 
-structured_llm = model_gemma.with_structured_output(BooleanWithJustification)
+structured_llm = model_deepseek.with_structured_output(BooleanWithJustification)
 
 
-
-response = structured_llm.invoke("Kepler played a key role in the theory of gravity, right?")
-
+response = structured_llm.invoke("Stephen Hawking was a greatest athletic to have ever walked on this planet.")
 print(response.model_dump_json())
